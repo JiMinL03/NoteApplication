@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF6CB">
+
+    <LinearLayout
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="#BFD8BD"
+        android:elevation="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/note_detail_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="데이터베이스에 있는 데이터가 들어갈 제목"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingEnd="8dp" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/note_detail_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="#FFFFFF">
+
+        <!-- ConstraintLayout 추가 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/note_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="데이터베이스에 있는 데이터가 들어갈 내용"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="#333333"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/update_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="수정"
+                app:layout_constraintTop_toBottomOf="@id/note_detail_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@android:color/white"
+                android:backgroundTint="#98C9A3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
