@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         noteDatabaseHelper = new NoteDatabaseHelper(this);
 
         noteList = new ArrayList<>();
+        noteDatabaseHelper.addNote("2025년", "새해 복 많이 받으세요 :) 좋은 일만 가득하세요! 감사합니다!");
 
-        // 수정된 부분: 중괄호 위치 수정
         noteAdapter = new NoteAdapter(noteList, new NoteAdapter.OnNoteClickListener() {
             @Override
             public void onNoteClick(Note note) {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }, new NoteAdapter.OnDeleteClickListener() {
             @Override
             public void onDeleteClick(Note note) {
-                deleteNote(note);  // 삭제 버튼 클릭 시 해당 노트 삭제
+                deleteNote(note);
             }
         });
 
@@ -62,12 +62,21 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack(null)
                     .commit();
         });
+
+        binding.searchButton.setOnClickListener(view -> {
+            String query = binding.searchEditText.getText().toString().trim();
+            if (!query.isEmpty()) {
+                ArrayList<Note> filteredList = new ArrayList<>(noteDatabaseHelper.searchByTitle(query));
+                noteAdapter.updateData(filteredList);
+            } else {
+                loadNotes();
+            }
+        });
+
     }
 
     private void deleteNote(Note note) {
-        // 데이터베이스에서 해당 노트 삭제
         noteDatabaseHelper.deleteNote(note.getId());
-        // 삭제 후 RecyclerView 갱신
         loadNotes();
     }
 

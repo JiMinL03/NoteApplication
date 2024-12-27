@@ -9,14 +9,13 @@ import com.jimin.noteapplication.databinding.ItemNoteBinding
 class NoteAdapter(
     private val list: ArrayList<Note>,
     private val listener: OnNoteClickListener,
-    private val deleteListener: OnDeleteClickListener // 삭제 리스너 추가
+    private val deleteListener: OnDeleteClickListener
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     interface OnNoteClickListener {
         fun onNoteClick(note: Note)
     }
 
-    // 삭제 리스너 인터페이스
     interface OnDeleteClickListener {
         fun onDeleteClick(note: Note)
     }
@@ -31,12 +30,17 @@ class NoteAdapter(
                 listener.onNoteClick(item)
             }
 
-            // 삭제 버튼 클릭 리스너 설정
             binding.deleteButton.setOnClickListener {
                 Log.d("NoteAdapter", "Delete button clicked: ${item.title}")
-                deleteListener.onDeleteClick(item) // 삭제 리스너 호출
+                deleteListener.onDeleteClick(item)
             }
         }
+    }
+
+    fun updateData(newList: List<Note>) {
+        list.clear()
+        list.addAll(newList)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {

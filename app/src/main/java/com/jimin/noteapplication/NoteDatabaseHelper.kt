@@ -85,4 +85,33 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         const val COLUMN_TITLE = "title"
         const val COLUMN_CONTENT = "content"
     }
+
+    // title로 메모 검색!!!!!!!!
+    fun searchByTitle(title: String): List<Note> {
+        val db = readableDatabase
+        val notes = mutableListOf<Note>()
+        val cursor: Cursor = db.query(
+            TABLE_NAME,
+            null,
+            "$COLUMN_TITLE LIKE ?",
+            arrayOf("%$title%"),
+            null,
+            null,
+            "$COLUMN_ID DESC"
+        )
+
+        cursor.use { c ->
+            if (c.moveToFirst()) {
+                do {
+                    val id = c.getInt(c.getColumnIndexOrThrow(COLUMN_ID))
+                    val noteTitle = c.getString(c.getColumnIndexOrThrow(COLUMN_TITLE))
+                    val content = c.getString(c.getColumnIndexOrThrow(COLUMN_CONTENT))
+                    notes.add(Note(id, noteTitle, content))
+                } while (c.moveToNext())
+            }
+        }
+        db.close()
+        return notes
+    }
+
 }
